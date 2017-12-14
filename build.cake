@@ -53,9 +53,9 @@ Task("Test")
   .IsDependentOn("Build")
   .Does(() =>
 {
-  CopyDirectory("./src/NodaTime.Serialization.ServiceStackText.UnitTests/bin/" + buildConfiguration +"/net452", "./SsV4Test");
-  DeleteFile("./SsV4Test/ServiceStack.Text.dll");
-  CopyFile("./ServiceStack.Text.4/lib/net40/ServiceStack.Text.dll", "./SsV4Test/ServiceStack.Text.dll");
+  CopyDirectory("./src/NodaTime.Serialization.ServiceStackText.UnitTests/bin/" + buildConfiguration +"/net452", "./SsV5Test");
+  DeleteFile("./SsV5Test/ServiceStack.Text.dll");
+  CopyFile("./ServiceStack.Text.5/lib/net45/ServiceStack.Text.dll", "./SsV5Test/ServiceStack.Text.dll");
 
   Action<ICakeContext, string> runTests = (ctx, framework) => { 
     ctx.DotNetCoreTest("./src/NodaTime.Serialization.ServiceStackText.UnitTests/NodaTime.Serialization.ServiceStackText.UnitTests.csproj", new DotNetCoreTestSettings 
@@ -72,7 +72,7 @@ Task("Test")
 
   var coverageResultSsV4 = new FilePath("./dotcover/dotcoverSsV4.data");
   DotCoverCover(
-    ctx => ctx.XUnit2("./SsV4Test/NodaTime.Serialization.ServiceStackText.UnitTests.dll"), 
+    ctx => ctx.XUnit2("./SsV5Test/NodaTime.Serialization.ServiceStackText.UnitTests.dll"), 
     coverageResultSsV4, 
     coverSettings);
 
@@ -84,7 +84,7 @@ Task("Test")
 
   var coverageResultCoreApp = new FilePath("./dotcover/dotcoverCoreApp.data");
   DotCoverCover(
-    ctx => runTests(ctx, "netcoreapp1.1"), 
+    ctx => runTests(ctx, "netcoreapp2.0"), 
     coverageResultCoreApp, 
     coverSettings);
 
